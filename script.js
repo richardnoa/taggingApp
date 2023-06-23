@@ -1,21 +1,5 @@
 /** TODO
- * Notizen Spalte pro Ereignis
- * Sychrnoisierung der Ereignisse über Datenbank
- * Schiedsrichter bezogene Ereignisse
- * Freiwürfe
- * Statistik (Anzahl Ereignisse gesamt)
- * Protokoll Statisitk plus
- * Zugriff auf ein Spiel von mehreren Zugängen (Videoschiedsrichter, Beobachter, Schiedsrichter[nach dem Spiel], Vereine)
- * Zugriffsbeschränkung mit Anmeldungen
- * Unterschiedlich Zugriffe mit unterschiedlichen Funktionen (Beobachter: Tag und Notizen, Videoschiedsrichter: Protokoll Tags, Notizen, Tagbeobachter, Spielerstellen,...)
- * Videoplayer der die Videodatei anzeigt (mChapters)
- * Springen in Videodatei zu Zeistempel aus Ereignis Liste (mChapters)
- * Platzierung von Werbung in der Platform
- * Landingpage Informationen zu Funktionen, Bezahlung, Login, Registrierung, Bezahlung
- * Premium Zugang für Mannschaften und Schiedsrichter - Basis, eigene Spiele Plus, alle Spiele Premium
- * Absichern der Datei nach Spielende als CSV
  * 
- * Spieler- und Spieldaten aus Onlineprotokoll über Erieignissablauf abgleichen Spieler ID als Zugang zu eigenen Szenen
  * */ 
 
 

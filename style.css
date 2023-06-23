@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: beige;
+}
+
+p {
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.stopwatch {
+    text-align: center;
+    margin-top: 30px;
+}
+
+#timer {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+button {
+    margin: 5px;
+    border: #000 solid 2px;
+}
+
+#heimPlayer {
+    color: white;
+}
+
+#tagTable {
+    margin-top: 30px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #000;
+    padding: 8px;
+}
+
+th {
+    text-align: left;
+}
+
+.tagged {
+    background-color: yellow; /* Change to the desired background color */
+}
+
+.startAbschnitt {
+    background-color: green; /* Change to the desired background color */
+}
+
+.endeAbschnitt {
+    background-color: green; /* Change to the desired background color */
+}
+
+.ausschluss {
+    background-color: burlywood; /* Change to the desired background color */
+}
+
+.stürmerfaul {
+    background-color: gray; /* Change to the desired background color */
+}
+
+.strafwurf {
+    background-color: blueviolet; /* Change to the desired background color */
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <title>Stopwatch with Tag</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!--add bootstrap 5 simple and clean but responsive design-->
+    
+</head>
+<body>
+    <div class="stopwatch">
+        <h1><span id="nameHeim">Team Heim</span><span> gegen </span><span id="nameGast">Team Gast</span></h1>
+    </div>
+    <div class="stopwatch">
+        <!--add button to change the h2 -->
+        <button id="changeNameHeim" class="btn btn-warning">Heim ändern</button>
+        <button id="changeNameGast" class="btn btn-primary">Gast ändern</button>
+        <div id="timer">00:00:00</div>
+        <button id="startBtn" class="btn btn-primary">Start Recording</button>
+        <button id="stopBtn" class="btn btn-primary">Stop</button>
+        <button id="resetBtn" class="btn btn-primary">Reset</button>
+        <button id="tagStartA" class="btn btn-primary">Start Abschnitt</button>
+        <button id="tagEndeA" class="btn btn-primary">Ende Abschnitt</button>
+        <button id="deleteBtn" class="btn btn-primary">letztes Ereignis löschen</button>
+        <button id="saveBtn" class="btn btn-primary">Export</button>
+        <button id="youTubeBtn" class="btn btn-primary">YouTube</button>
+    </div>
+    <div class="stopwatch">
+        <button id="tagBtn" class="btn btn-info">Tag</button>
+        <button id="tagSt" class="btn btn-info">Stürmerfoul</button>
+        <button id="tagA" class="btn btn-info">Ausschluss</button>
+        <button id="tagS" class="btn btn-info">Strafwurf</button>
+        <button id="scoreHeim" class="btn btn-info">Tor Heim</button>
+        <button id="scoreGast" class="btn btn-info">Tor Gast</button>
+        <button id="noteBtn" class="btn btn-info">Notiz zum letzten Ereignis</button>
+    </div>
+    <div class="stopwatch">
+        <h2>Heim</h2>
+        <button  id="heim1" class="btn btn-warning"> 1 </button>
+        <button  id="heim2" class="btn btn-warning"> 2 </button>
+        <button  id="heim3" class="btn btn-warning"> 3 </button>
+        <button  id="heim4" class="btn btn-warning"> 4 </button>
+        <button  id="heim5" class="btn btn-warning"> 5 </button>
+        <button  id="heim6" class="btn btn-warning"> 6 </button>
+        <button  id="heim7" class="btn btn-warning"> 7 </button>
+        <button  id="heim8" class="btn btn-warning"> 8 </button>
+        <button  id="heim9" class="btn btn-warning"> 9 </button>
+        <button  id="heim10" class="btn btn-warning"> 10 </button>
+        <button  id="heim11" class="btn btn-warning"> 11 </button>
+        <button  id="heim12" class="btn btn-warning"> 12 </button>
+        <button  id="heim13" class="btn btn-warning"> 13 </button>  
+    </div>
+    <div class="stopwatch">
+        <h2>Gast</h2>
+        <button id="gast1" class="btn btn-primary"> 1 </button>
+        <button id="gast2" class="btn btn-primary"> 2 </button>
+        <button id="gast3" class="btn btn-primary"> 3 </button>
+        <button id="gast4" class="btn btn-primary"> 4 </button>
+        <button id="gast5" class="btn btn-primary"> 5 </button>
+        <button id="gast6" class="btn btn-primary"> 6 </button>
+        <button id="gast7" class="btn btn-primary"> 7 </button>
+        <button id="gast8" class="btn btn-primary"> 8 </button>
+        <button id="gast9" class="btn btn-primary"> 9 </button>
+        <button id="gast10" class="btn btn-primary"> 10 </button>
+        <button id="gast11" class="btn btn-primary"> 11 </button>
+        <button id="gast12" class="btn btn-primary"> 12 </button>
+        <button id="gast13" class="btn btn-primary"> 13 </button>
+    </div>
+    <table id="tagTable" class="table">
+        <tr>
+            <th>Time</th>
+            <th>Ereignis</th>
+            <th>Spieler</th>
+            <th>Notiz</th>
+        </tr>
+    </table>
+    <script src="script.js"></script>
+</body>
+</html>
+
+

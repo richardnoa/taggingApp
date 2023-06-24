@@ -101,7 +101,7 @@ function scoreHeim() {
         const playerCell = row.insertCell(2);
         const noteCell = row.insertCell(3);
         timeCell.textContent = '[' + `${timer.textContent}` + '.00000]'; // Get current time from timer element
-        tagCell.textContent = `${anzahlToreHeim}` + ' : ' + `${anzahlToreGast}`; // Placeholder for tag, you can customize this
+        tagCell.textContent = `${anzahlToreHeim}` + ' : ' + `${anzahlToreGast}` + " Tor Heim"; // Placeholder for tag, you can customize this
         //noteCell.textContent = '-'; // Placeholder for tag, you can customize this
 
 
@@ -122,7 +122,7 @@ function scoreGast() {
         const playerCell = row.insertCell(2);
         const noteCell = row.insertCell(3);
         timeCell.textContent = '[' + `${timer.textContent}` + '.00000]'; // Get current time from timer element
-        tagCell.textContent = `${anzahlToreHeim}` + ' : ' + `${anzahlToreGast}`; // Placeholder for tag, you can customize this
+        tagCell.textContent = `${anzahlToreHeim}` + ' : ' + `${anzahlToreGast}`+ " Tor Gast"; // Placeholder for tag, you can customize this
         //noteCell.textContent = '-'; // Placeholder for tag, you can customize this
 
 
@@ -363,6 +363,43 @@ function saveTags() {
 var deleteBtn = document.getElementById('deleteBtn');
 deleteBtn.addEventListener('click', deleteLastRow);
 function deleteLastRow() {
+    //save last row in variables for each cell
+    var table = document.getElementById("tagTable");
+    var row = table.rows[1];
+    var cell1 = row.cells[0];
+    var cell2 = row.cells[1];
+    var cell3 = row.cells[2];
+    var cell4 = row.cells[3];
+    //write an if statement to find out what is the content of cell [1]
+    //if cell [1] contains " Tag" tagCounter -1
+    if (cell2.innerHTML.includes(" Tag")) {
+        tagCounter--;
+    }
+    //if cell [1] contains " Stürmerfoul" stürmerFoulCounter -1
+    if (cell2.innerHTML.includes(" Stürmerfoul")) {
+        stürmerFoulCounter--;
+    }
+    //if cell [1] contains " Ausschluss" ausschlussCounter -1
+    if (cell2.innerHTML.includes(" Ausschluss")) {
+        ausschlussCounter--;
+    }
+    //if cell [1] contains " Strafwurf" strafwurfCounter -1
+    if (cell2.innerHTML.includes(" Strafwurf")) {
+        strafwurfCounter--;
+    }
+    //if cell [1] contains ". Abschnitt Ende" abschnittCounter -1
+    if (cell2.innerHTML.includes(". Abschnitt Ende")) {
+        abschnittCounter--;
+    }
+    //if cell [1] contains "Tor Heim" anzahlToreHeim -1
+    if (cell2.innerHTML.includes("Tor Heim")) {
+        anzahlToreHeim--;
+    }
+    //if cell [1] contains "Tor Gast" anzahlToreGast -1
+    if (cell2.innerHTML.includes("Tor Gast")) {
+        anzahlToreGast--;
+    }
+    //delete last row
     tagTable.deleteRow(1);
 }
 

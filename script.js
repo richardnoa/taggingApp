@@ -329,34 +329,39 @@ function changeNameGast() {
     }
 }
 
+function saveFile(content, filename){
+	var encodedUri = encodeURI(content);
+    //download txt file add .txt to the end of the file name
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    // get team names
+    link.setAttribute("download", filename);
+    document.body.appendChild(link); // Required for FF
+    link.click();
+}
+
 // Saves table content into an text file the file has following format
 document.getElementById('saveBtn').addEventListener('click', saveTags);
 function saveTags() {
-    let csvContent = "data:text/csv;charset=utf-8,";
-    let rows = document.querySelectorAll('table tr');
-    //add row to csv with content <@TimeScale:44100>
-    csvContent += "<@TimeScale:44100>\r\n";
-    csvContent += "<@Start>";
+	let team1 = document.getElementById("nameHeim").innerHTML;
+    let team2 = document.getElementById("nameGast").innerHTML;    
+	let rows = document.querySelectorAll('table tr');
+	//add row to csv with content <@TimeScale:44100>
+	let csvContent_mchapter = "data:text/csv;charset=utf-8,";
+    csvContent_mchapter += "<@TimeScale:44100>\r\n";
+    csvContent_mchapter += "<@Start>";
+
     rows.forEach(function(rowArray){
         let row = [];
         rowArray.querySelectorAll('td').forEach(function(cell){
             row.push(cell.innerText);
         });
         //join with tabs
-        csvContent += row.join("\t") + "\r\n";
+        csvContent_mchapter += row.join("\t") + "\r\n";
     }); 
-    csvContent += "<@End>";
-    var encodedUri = encodeURI(csvContent);
-    //download txt file add .txt to the end of the file name
-    var link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    //use team names as file name
-    // get team names
-    let team1 = document.getElementById("nameHeim").innerHTML;
-    let team2 = document.getElementById("nameGast").innerHTML;
-    link.setAttribute("download", team1 + " gegen " + team2 + ".txt");
-    document.body.appendChild(link); // Required for FF
-    link.click();
+    csvContent_mchapter += "<@End>";
+	//use team names as file name
+	saveFile(csvContent_mchapter, team1 + " gegen " + team2 + "_mchapter.txt");
 }
 
 // delete last row

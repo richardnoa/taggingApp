@@ -329,12 +329,12 @@ function changeNameGast() {
     }
 }
 
-function saveFile(content, filename){
+//save content to file with name filename
+function saveFile(content, filename) {
 	var encodedUri = encodeURI(content);
     //download txt file add .txt to the end of the file name
     var link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    // get team names
     link.setAttribute("download", filename);
     document.body.appendChild(link); // Required for FF
     link.click();
@@ -345,12 +345,20 @@ document.getElementById('saveBtn').addEventListener('click', saveTags);
 function saveTags() {
 	let team1 = document.getElementById("nameHeim").innerHTML;
     let team2 = document.getElementById("nameGast").innerHTML;    
+	let teams = team1 + " gegen " + team2;
 	let rows = document.querySelectorAll('table tr');
-	//add row to csv with content <@TimeScale:44100>
+	
+	//prepare mchapter csv
 	let csvContent_mchapter = "data:text/csv;charset=utf-8,";
     csvContent_mchapter += "<@TimeScale:44100>\r\n";
     csvContent_mchapter += "<@Start>";
-
+	
+	//prepare ffmpeg csv
+	let csvContent_ffmpeg = "data:text/csv;charset=utf-8,";
+	csvContent_ffmpeg += ";FFMETADATA1\r\n";
+	csvContent_ffmpeg += "title=" + teams + "\r\n";
+	csvContent_ffmpeg += "\r\n";
+	
     rows.forEach(function(rowArray){
         let row = [];
         rowArray.querySelectorAll('td').forEach(function(cell){
@@ -358,10 +366,43 @@ function saveTags() {
         });
         //join with tabs
         csvContent_mchapter += row.join("\t") + "\r\n";
+		
+		//TODO: Hier ffmpeg Dateiinhalt basteln
+		csvContent_ffmpeg += "[CHAPTER]\r\n";
+		csvContent_ffmpeg += "TIMEBASE=1/1000\r\n";
+		
+		let timestamp_milliseconds = row["0"];
+		
+		let timestamp = row["0"] + "";
+		timestamp = timestamp.replace("[", "");
+		timestamp = timestamp.replace("]", "");
+		
+		
+		//TODO: Nochmal mit Date(...) und dessen methoden implementieren
+		/*
+		timestamp = new Date("January 01, 1970 " + timestamp);
+		console.log(timestamp);
+		timestamp_milliseconds = timestamp.getMilliseconds();
+		timestamp_milliseconds += timestamp.getSeconds() * 1000;
+		timestamp_milliseconds += timestamp.getMinutes() * 60 * 1000;
+		timestamp_milliseconds += timestamp.getHours() * 60 * 60 * 1000;
+		*/
+		timestamp = timestamp.split(":")
+		timestamp_milliseconds = parseFloat(timestamp["0"]) * 60 * 60 * 1000
+		timestamp_milliseconds = parseFloat(timestamp["1"]) * 60 * 1000
+		timestamp_milliseconds = parseFloat(timestamp["2"]) * 1000
+		
+		csvContent_ffmpeg += "START=" + timestamp_milliseconds + "\r\n";
+		//csvContent_ffmpeg += "END=" + + "\r\n"  //TODO: Testen, ob das hier ueberhaupt notwendig ist
+		csvContent_ffmpeg += "title=" + row["1"] + "\r\n";
+		csvContent_ffmpeg += "\r\n";
     }); 
+	
     csvContent_mchapter += "<@End>";
-	//use team names as file name
-	saveFile(csvContent_mchapter, team1 + " gegen " + team2 + "_mchapter.txt");
+	
+	//use team names as file name and download mchapter and ffmpeg timestamp files
+	saveFile(csvContent_mchapter,  teams + "_mchapter.txt");
+	saveFile(csvContent_ffmpeg,  teams + "_ffmpeg.txt");
 }
 
 // delete last row

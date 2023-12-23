@@ -389,8 +389,8 @@ function saveTags() {
 		*/
 		timestamp = timestamp.split(":")
 		timestamp_milliseconds = parseFloat(timestamp["0"]) * 60 * 60 * 1000
-		timestamp_milliseconds = parseFloat(timestamp["1"]) * 60 * 1000
-		timestamp_milliseconds = parseFloat(timestamp["2"]) * 1000
+		timestamp_milliseconds += parseFloat(timestamp["1"]) * 60 * 1000
+		timestamp_milliseconds += parseFloat(timestamp["2"]) * 1000
 		
 		csvContent_ffmpeg += "START=" + timestamp_milliseconds + "\r\n";
 		//csvContent_ffmpeg += "END=" + + "\r\n"  //TODO: Testen, ob das hier ueberhaupt notwendig ist

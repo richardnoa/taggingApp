@@ -367,7 +367,6 @@ function saveTags() {
         //join with tabs
         csvContent_mchapter += row.join("\t") + "\r\n";
 		
-		//TODO: Hier ffmpeg Dateiinhalt basteln
 		csvContent_ffmpeg += "[CHAPTER]\r\n";
 		csvContent_ffmpeg += "TIMEBASE=1/1000\r\n";
 		
@@ -393,7 +392,6 @@ function saveTags() {
 		timestamp_milliseconds += parseFloat(timestamp["2"]) * 1000
 		
 		csvContent_ffmpeg += "START=" + timestamp_milliseconds + "\r\n";
-		//csvContent_ffmpeg += "END=" + + "\r\n"  //TODO: Testen, ob das hier ueberhaupt notwendig ist
 		csvContent_ffmpeg += "title=" + row["1"] + "\r\n";
 		csvContent_ffmpeg += "\r\n";
     }); 

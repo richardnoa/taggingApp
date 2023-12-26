@@ -358,42 +358,46 @@ function saveTags() {
 	csvContent_ffmpeg += ";FFMETADATA1\r\n";
 	csvContent_ffmpeg += "title=" + teams + "\r\n";
 	csvContent_ffmpeg += "\r\n";
+	let skippedFirstRow_ffmpeg = false;
 	
     rows.forEach(function(rowArray){
         let row = [];
         rowArray.querySelectorAll('td').forEach(function(cell){
             row.push(cell.innerText);
         });
-        //join with tabs
+        //join mchapter csv with tabs
         csvContent_mchapter += row.join("\t") + "\r\n";
 		
-		csvContent_ffmpeg += "[CHAPTER]\r\n";
-		csvContent_ffmpeg += "TIMEBASE=1/1000\r\n";
-		
-		let timestamp_milliseconds = row["0"];
-		
-		let timestamp = row["0"] + "";
-		timestamp = timestamp.replace("[", "");
-		timestamp = timestamp.replace("]", "");
-		
-		
-		//TODO: Nochmal mit Date(...) und dessen methoden implementieren
-		/*
-		timestamp = new Date("January 01, 1970 " + timestamp);
-		console.log(timestamp);
-		timestamp_milliseconds = timestamp.getMilliseconds();
-		timestamp_milliseconds += timestamp.getSeconds() * 1000;
-		timestamp_milliseconds += timestamp.getMinutes() * 60 * 1000;
-		timestamp_milliseconds += timestamp.getHours() * 60 * 60 * 1000;
-		*/
-		timestamp = timestamp.split(":")
-		timestamp_milliseconds = parseFloat(timestamp["0"]) * 60 * 60 * 1000
-		timestamp_milliseconds += parseFloat(timestamp["1"]) * 60 * 1000
-		timestamp_milliseconds += parseFloat(timestamp["2"]) * 1000
-		
-		csvContent_ffmpeg += "START=" + timestamp_milliseconds + "\r\n";
-		csvContent_ffmpeg += "title=" + row["1"] + "\r\n";
-		csvContent_ffmpeg += "\r\n";
+		if(skippedFirstRow_ffmpeg){
+			csvContent_ffmpeg += "[CHAPTER]\r\n";
+			csvContent_ffmpeg += "TIMEBASE=1/1000\r\n";
+			
+			let timestamp = row["0"] + "";
+			timestamp = timestamp.replace("[", "");
+			timestamp = timestamp.replace("]", "");
+			
+			//TODO: Implement with Date(...) instead of parsing the timestap string manually
+			/*
+			timestamp = new Date("January 01, 1970 " + timestamp);
+			console.log(timestamp);
+			timestamp_milliseconds = timestamp.getMilliseconds();
+			timestamp_milliseconds += timestamp.getSeconds() * 1000;
+			timestamp_milliseconds += timestamp.getMinutes() * 60 * 1000;
+			timestamp_milliseconds += timestamp.getHours() * 60 * 60 * 1000;
+			*/
+			
+			timestamp = timestamp.split(":")
+			let timestamp_milliseconds = parseFloat(timestamp["0"]) * 60 * 60 * 1000
+			timestamp_milliseconds += parseFloat(timestamp["1"]) * 60 * 1000
+			timestamp_milliseconds += parseFloat(timestamp["2"]) * 1000
+			
+			csvContent_ffmpeg += "START=" + timestamp_milliseconds + "\r\n";
+			csvContent_ffmpeg += "END=" + (timestamp_milliseconds+10000) + "\r\n";
+			csvContent_ffmpeg += "title=" + row["1"] + "\r\n";
+			csvContent_ffmpeg += "\r\n";
+		}else{
+			skippedFirstRow_ffmpeg = true;
+		}
     }); 
 	
     csvContent_mchapter += "<@End>";

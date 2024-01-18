@@ -329,34 +329,82 @@ function changeNameGast() {
     }
 }
 
+//save content to file with name filename
+function saveFile(content, filename) {
+	var encodedUri = encodeURI(content);
+    //download txt file add .txt to the end of the file name
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", filename);
+    document.body.appendChild(link); // Required for FF
+    link.click();
+}
+
 // Saves table content into an text file the file has following format
 document.getElementById('saveBtn').addEventListener('click', saveTags);
 function saveTags() {
-    let csvContent = "data:text/csv;charset=utf-8,";
-    let rows = document.querySelectorAll('table tr');
-    //add row to csv with content <@TimeScale:44100>
-    csvContent += "<@TimeScale:44100>\r\n";
-    csvContent += "<@Start>";
+	let team1 = document.getElementById("nameHeim").innerHTML;
+    let team2 = document.getElementById("nameGast").innerHTML;    
+	let teams = team1 + " gegen " + team2;
+	let rows = document.querySelectorAll('table tr');
+	
+	//prepare mchapter csv
+	let csvContent_mchapter = "data:text/csv;charset=utf-8,";
+    csvContent_mchapter += "<@TimeScale:44100>\r\n";
+    csvContent_mchapter += "<@Start>";
+	
+	//prepare ffmpeg csv
+	let csvContent_ffmpeg = "data:text/csv;charset=utf-8,";
+	csvContent_ffmpeg += ";FFMETADATA1\r\n";
+	csvContent_ffmpeg += "title=" + teams + "\r\n";
+	csvContent_ffmpeg += "\r\n";
+	let skippedFirstRow_ffmpeg = false;
+	
     rows.forEach(function(rowArray){
         let row = [];
         rowArray.querySelectorAll('td').forEach(function(cell){
             row.push(cell.innerText);
         });
-        //join with tabs
-        csvContent += row.join("\t") + "\r\n";
+        //join mchapter csv with tabs
+        csvContent_mchapter += row.join("\t") + "\r\n";
+		
+		if(skippedFirstRow_ffmpeg){
+			csvContent_ffmpeg += "[CHAPTER]\r\n";
+			csvContent_ffmpeg += "TIMEBASE=1/1000\r\n";
+			
+			let timestamp = row["0"] + "";
+			timestamp = timestamp.replace("[", "");
+			timestamp = timestamp.replace("]", "");
+			
+			//TODO: Implement with Date(...) instead of parsing the timestap string manually
+			/*
+			timestamp = new Date("January 01, 1970 " + timestamp);
+			console.log(timestamp);
+			timestamp_milliseconds = timestamp.getMilliseconds();
+			timestamp_milliseconds += timestamp.getSeconds() * 1000;
+			timestamp_milliseconds += timestamp.getMinutes() * 60 * 1000;
+			timestamp_milliseconds += timestamp.getHours() * 60 * 60 * 1000;
+			*/
+			
+			timestamp = timestamp.split(":")
+			let timestamp_milliseconds = parseFloat(timestamp["0"]) * 60 * 60 * 1000
+			timestamp_milliseconds += parseFloat(timestamp["1"]) * 60 * 1000
+			timestamp_milliseconds += parseFloat(timestamp["2"]) * 1000
+			
+			csvContent_ffmpeg += "START=" + timestamp_milliseconds + "\r\n";
+			csvContent_ffmpeg += "END=" + (timestamp_milliseconds+10000) + "\r\n";
+			csvContent_ffmpeg += "title=" + row["1"] + "\r\n";
+			csvContent_ffmpeg += "\r\n";
+		}else{
+			skippedFirstRow_ffmpeg = true;
+		}
     }); 
-    csvContent += "<@End>";
-    var encodedUri = encodeURI(csvContent);
-    //download txt file add .txt to the end of the file name
-    var link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    //use team names as file name
-    // get team names
-    let team1 = document.getElementById("nameHeim").innerHTML;
-    let team2 = document.getElementById("nameGast").innerHTML;
-    link.setAttribute("download", team1 + " gegen " + team2 + ".txt");
-    document.body.appendChild(link); // Required for FF
-    link.click();
+	
+    csvContent_mchapter += "<@End>";
+	
+	//use team names as file name and download mchapter and ffmpeg timestamp files
+	saveFile(csvContent_mchapter,  teams + "_mchapter.txt");
+	saveFile(csvContent_ffmpeg,  teams + "_ffmpeg.txt");
 }
 
 // delete last row

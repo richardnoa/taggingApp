@@ -130,10 +130,10 @@ function scoreGast() {
         //row.classList.add('ausschluss');
         }
     }
-// add event listener for keydup then arrow key is hit
+// add event listener for keydup then arrow up, arrow left or page up key is hit
 // Arrowup = Tag
 document.addEventListener('keyup', function(event) {
-    if (event.code === 'ArrowUp') {
+    if (event.code === 'ArrowUp' || event.code === 'ArrowLeft' || event.code === 'PageUp') {
         tagTime();
     }
 });
